@@ -1,0 +1,19 @@
+﻿# CMakeList.txt: TcpFileTransfer 的 CMake 项目，在此处包括源代码并定义
+# 项目特定的逻辑。
+#
+
+# 将源代码添加到此项目的可执行文件。
+
+set(COMMON_SOURCE "Socket.hpp")
+set(SERVER_SOURCE "SocketServer.hpp" "FileServer.hpp" "FileServerMain.cpp")
+set(CLIENT_SOURCE "SocketClient.hpp" "FileClient.hpp" "FileClientMain.cpp")
+
+add_executable (FileServer ${COMMON_SOURCE} ${SERVER_SOURCE})
+add_executable (FileClient ${COMMON_SOURCE} ${CLIENT_SOURCE})
+
+if (CMAKE_VERSION VERSION_GREATER 3.12)
+  set_property(TARGET FileServer PROPERTY CXX_STANDARD 20)
+  set_property(TARGET FileClient PROPERTY CXX_STANDARD 20)
+endif()
+
+# TODO: 如有需要，请添加测试并安装目标。
