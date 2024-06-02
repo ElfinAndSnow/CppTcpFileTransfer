@@ -23,6 +23,25 @@ protected:
 
     char* _shareFolder;
 
+    int GetFileSize(char* filename) {
+
+        FILE* fp = NULL;
+        fp = fopen(filename, "rb");
+        
+        if (fp != NULL) {
+
+            fseek(fp, 0, SEEK_END);
+            int size = ftell(fp);
+            
+            fclose(fp);
+            
+            return size;
+        }
+        
+        return 0;
+
+    }
+
 	int SendFile() {
 
         if (!_isconnected)
@@ -44,6 +63,29 @@ protected:
         char buffer[BUFFER_SIZE] = { 0 };
         FILE* fp = fopen(full_name, "r");
         if (fp != NULL) {
+
+            int fileSize = GetFileSize(full_name);
+            if (fileSize <= 0) {
+
+                printf("[-]Failed in getting the size of the file (%s) requested by (%s), "
+                    "check if the file exists or you own the permission.\n",
+                    file_name, _userip);
+
+                fclose(fp);
+
+                return SEND_FILE_ERROR;
+            }
+
+            if (SendData((char*)&fileSize, sizeof(fileSize)) == SOCKET_ERROR) {
+
+                printf("[-]Error in sending file size to (%s).\n", _userip);
+
+                fclose(fp);
+
+                return SEND_FILE_ERROR;
+            }
+
+            printf("[+]File size sent to (%s).\n", _userip);
 
             long long int length = 0;
             long long int total_length = 0;
