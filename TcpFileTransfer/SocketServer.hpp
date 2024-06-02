@@ -15,16 +15,7 @@ public:
 
 	SocketServer(char* port){
 
-		Socket();
-
 		_port = port;
-
-		Create();
-		Bind();
-		Listen();
-		Accept();
-
-		CloseListen();
 	}
 
 	int Create() {
