@@ -66,7 +66,28 @@ protected:
 
 		char buffer[BUFFER_SIZE] = { 0 };
 		FILE* fp;
-		int bytes_read;
+
+		clock_t start_time = clock();
+		clock_t current_time;
+		double elapsed_time;
+		int speed;
+		int fileSize = 0;
+
+		if (RecvData((char*)&fileSize, sizeof(fileSize)) == SOCKET_ERROR) {
+
+			printf("[-]Failed in receiving the file size.\n");
+
+			return RECV_FILE_ERROR;
+		}
+
+		if (fileSize <= 0) {
+
+			printf("[-]Requested file doesn't exist.\n");
+
+			return RECV_FILE_ERROR;
+		}
+
+		printf("[+]File size: %d KB.\n", (fileSize / 1024));
 
 		fp = fopen(_fullpath, "w");
 		if (fp != NULL) {
@@ -87,7 +108,15 @@ protected:
 				}
 				total_length += length;
 				memset(buffer, 0, BUFFER_SIZE);
+
+				current_time = clock();
+				elapsed_time = (double)(current_time - start_time) / CLOCKS_PER_SEC;
+				speed = (int)total_length / elapsed_time;
+				double percentage = (double)total_length / fileSize;
+				printProgressbar(percentage, speed);
 			}
+
+			printf("\n");
 
 			if (iResult < 0) {
 				
@@ -104,10 +133,29 @@ protected:
 
 		}
 
-		fclose(fp);
-
 		return RECV_FILE_ERROR;
 
+	}
+
+	void printProgressbar(double percentage, int speed) {
+
+		int barWidth = 50;
+		int barLength = barWidth * percentage;
+
+		printf("\r[+]Downloading... [");
+		for (int i = 0; i < barWidth; i++) {
+		
+			if (i < barLength)
+				printf("=");
+			else if (i == barLength)
+				printf(">");
+			else
+				printf(" ");
+		}
+
+		printf("] %.2f%% , current speed:%d KB/s", (double)(percentage * 100.0), (speed / 1024));
+
+		fflush(stdout);
 	}
 
 };
