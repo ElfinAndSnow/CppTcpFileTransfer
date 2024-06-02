@@ -15,12 +15,29 @@ class FileClient : public SocketClient {
 
 public:
 
-	FileClient(char* host, char* port, char* filename, char* savepath) : SocketClient(host, port){
+	FileClient(char* host, char* port, char* filename, char* savepath) : SocketClient(host, port) {
 
-		_host = host;
-		_port = port;
 		_filename = filename;
-		_savepath = savepath;
+		_savepath = ensureSlashAtEnd(savepath);
+
+		if (!std::filesystem::exists(_savepath)) {
+
+			printf("[-]Path (%s) doesn't exist.", _savepath);
+
+			return;
+		}
+
+		Launch();
+
+		delete(_savepath);
+	}
+	
+	void Launch() {
+
+		Init();
+
+		Create();
+		Connect();
 
 		SetFilePath();
 		RecvFile();
