@@ -2,6 +2,9 @@
 
 #include "SocketClient.hpp"
 
+#include <time.h>
+#include <filesystem>
+
 constexpr int SET_FILEPATH_ERROR = 1;
 constexpr int SET_FILEPATH_SUCCESS = 0;
 
