@@ -39,7 +39,7 @@ protected:
 
     char* _shareFolder;
 
-    int GetFileSize(char* filename) {
+    long GetFileSize(char* filename) {
 
         FILE* fp = NULL;
         fp = fopen(filename, "rb");
@@ -47,7 +47,7 @@ protected:
         if (fp != NULL) {
 
             fseek(fp, 0, SEEK_END);
-            int size = ftell(fp);
+            long size = ftell(fp);
             
             fclose(fp);
             
@@ -80,7 +80,7 @@ protected:
         FILE* fp = fopen(full_name, "r");
         if (fp != NULL) {
 
-            int fileSize = GetFileSize(full_name);
+            long fileSize = GetFileSize(full_name);
             if (fileSize <= 0) {
 
                 printf("[-]Failed in getting the size of the file (%s) requested by (%s), "

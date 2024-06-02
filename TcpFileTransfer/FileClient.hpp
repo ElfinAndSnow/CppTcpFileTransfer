@@ -88,7 +88,7 @@ protected:
 		clock_t current_time;
 		double elapsed_time;
 		int speed;
-		int fileSize = 0;
+		long fileSize = 0;
 
 		if (RecvData((char*)&fileSize, sizeof(fileSize)) == SOCKET_ERROR) {
 
@@ -104,7 +104,7 @@ protected:
 			return RECV_FILE_ERROR;
 		}
 
-		printf("[+]File size: %d KB.\n", (fileSize / 1024));
+		printf("[+]File size: %ld KB.\n", (fileSize / 1024));
 
 		fp = fopen(_fullpath, "w");
 		if (fp != NULL) {
