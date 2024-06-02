@@ -11,7 +11,7 @@ protected:
 public:
 
 	SocketClient(char* host, char* port) {
-		
+
 		_host = host;
 		_port = port;
 	}

@@ -6,7 +6,7 @@ int main(int argc, char* argv[]) {
 		fprintf(stderr,
 			"[-]Too few arguments. Usage: %s <host> <port> <filename> <savepath>\n",
 			argv[0]);
-
+		
 		return -1;
 	}
 	else if (argc > 5) {
@@ -17,12 +17,12 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 	
-		char* host = argv[1];
-		char* port = argv[2];
-		char* filename = argv[3];
-		char* savepath = argv[4];
+	char* host = argv[1];
+	char* port = argv[2];
+	char* filename = argv[3];
+	char* savepath = argv[4];
 
-		FileClient client = FileClient(host, port, filename, savepath);
+	FileClient client = FileClient(host, port, filename, savepath);
 
 	return 0;
 }

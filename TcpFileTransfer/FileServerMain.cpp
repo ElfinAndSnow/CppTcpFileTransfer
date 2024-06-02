@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
 	char* port = argv[1];
 	char* path = argv[2];
 
-		while (1)
+	while (1)
 		FileServer server = FileServer(port, path);
 
 	return 0;

@@ -171,7 +171,7 @@ protected:
 		}
 
 		printf("] %.2f%% , current speed:%d KB/s", (double)(percentage * 100.0), (speed / 1024));
-
+		
 		fflush(stdout);
 	}
 

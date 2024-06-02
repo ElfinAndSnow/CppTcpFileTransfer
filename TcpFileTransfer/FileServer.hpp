@@ -29,9 +29,9 @@ public:
         Accept();
 
         CloseListen();
-        
+
         SendFile();
-        
+
         CloseClient();
     }
 
