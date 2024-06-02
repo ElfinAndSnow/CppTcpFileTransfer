@@ -12,14 +12,8 @@ public:
 
 	SocketClient(char* host, char* port) {
 		
-		Socket();
-
 		_host = host;
 		_port = port;
-
-		Create();
-		Connect();
-
 	}
 
 	int Create() {
