@@ -57,7 +57,7 @@ public:
 
 	int iResult;
 
-	bool WinsockInit() {
+	bool Init() {
 
 #ifdef _WIN32
 		WSADATA wsaData;
@@ -104,10 +104,6 @@ public:
 		close(_connectfd);
 #endif
 
-	}
-
-	Socket() {
-		if (!WinsockInit()) exit(1);
 	}
 
 	int SendData(void* buf, size_t len)
