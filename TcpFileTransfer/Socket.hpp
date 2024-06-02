@@ -119,4 +119,45 @@ public:
 		return res;
 	}
 
+	char* ensureSlashAtEnd(char* path) {
+		if (path == nullptr || *path == '\0') {
+
+			char* newPath = new char[3];
+			strcpy(newPath, 
+#ifdef _WIN32
+				".\\"
+#else
+				"./"
+#endif	
+			);
+			return newPath;
+		}
+
+		size_t length = strlen(path);
+		if (path[length - 1] == 
+#ifdef _WIN32
+			'\\'
+#else
+			'/'
+#endif
+			) {
+
+			char* newPath = new char[length + 1];
+			strcpy(newPath, path);
+			return newPath;
+		}
+		else {
+			char* newPath = new char[length + 2];
+			strcpy(newPath, path);
+			strcat(newPath, 
+#ifdef _WIN32
+				"\\"
+#else
+				"/"
+#endif
+			);
+			return newPath;
+		}
+	}
+
 };
