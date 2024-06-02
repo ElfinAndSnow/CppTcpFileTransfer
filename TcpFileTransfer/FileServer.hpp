@@ -10,9 +10,25 @@ class FileServer : public SocketServer {
 
 public:
 
-    FileServer(char* shareFolder, char* port) : SocketServer(port) {
+    FileServer(char* port, char* shareFolder) : SocketServer(port) {
 
-        _shareFolder = shareFolder;
+        _shareFolder = ensureSlashAtEnd(shareFolder);
+
+        Launch();
+
+        delete(_shareFolder);
+    }
+
+    void Launch() {
+
+        Init();
+
+        Create();
+        Bind();
+        Listen();
+        Accept();
+
+        CloseListen();
         
         SendFile();
         
